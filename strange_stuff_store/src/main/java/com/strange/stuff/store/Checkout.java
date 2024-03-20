@@ -14,6 +14,11 @@ public class Checkout {
     public void addToCart(Product product, int quantity) {
         cart.put(product, quantity);
     }
+
+    // Remove product from cart
+    public void removeFromCart(Product product) {
+        cart.remove(product);
+    }
     
     // Calculate total in cart
     public float calculateTotal() {
@@ -69,6 +74,10 @@ public class Checkout {
         }
     }
     public int getCartSize() {
-        return cart.size();
+        int size = 0;
+        for (Map.Entry<Product, Integer> entry : cart.entrySet()) {
+            size += entry.getValue();
+        }
+        return size;
     }
 }

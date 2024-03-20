@@ -35,12 +35,38 @@ public class strageStuffStoreTest {
     }
 
     @Test
-    public void testDisplayCart() {
+    public void testCartPrice() {
         checkout.addToCart(raccoon1, 1);
         checkout.addToCart(raccoon2, 1);
         checkout.addToCart(plant1, 1);
         assertEquals(89.97f, checkout.calculateTotal(), 0.0001);
     }
 
-    
+
+    @Test
+    public void testCartSize() {
+        checkout.addToCart(raccoon1, 1);
+        checkout.addToCart(raccoon2, 7);
+        assertEquals(8, checkout.getCartSize());
+    }
+
+    @Test
+    public void testRemoveFromCart() {
+        checkout.addToCart(raccoon1, 1);
+        checkout.removeFromCart(raccoon1);
+        assertEquals(0, checkout.getCartSize());
+    }
+
+    @Test
+    public void testClearCart() {
+        checkout.addToCart(raccoon1, 1);
+        checkout.addToCart(raccoon2, 1);
+        checkout.addToCart(plant1, 1);
+        checkout.addToCart(plant2, 18);
+        checkout.addToCart(artifact1, 1);
+        checkout.addToCart(artifact2, 25);
+        checkout.clearCart();
+        assertEquals(0, checkout.getCartSize());
+    }
+
 }

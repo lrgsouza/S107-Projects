@@ -1,4 +1,4 @@
-name: Java CI with Maven
+name: Strange Stuff Store Ci
 
 on:
     push:
@@ -10,9 +10,9 @@ jobs:
     test:
         runs-on: ubuntu-latest
         steps:
-        - uses: actions/checkout@v3
+        - uses: actions/checkout@v4
         - name: Set up JDK 17
-          uses: actions/setup-java@v3
+          uses: actions/setup-java@v4
           with:
               java-version: '17'
               distribution: 'temurin'
@@ -21,14 +21,19 @@ jobs:
           run: |
             cd strange_stuff_store
             mvn test
+        - name: Upload test results as artifact
+          uses: actions/upload-artifact@v4
+          with:
+            name: test-results
+            path: strange_stuff_store/target/surefire-reports/
             
     build:
         runs-on: ubuntu-latest
 
         steps:
-        - uses: actions/checkout@v3
+        - uses: actions/checkout@v4
         - name: Set up JDK 17
-          uses: actions/setup-java@v3
+          uses: actions/setup-java@v4
           with:
               java-version: '17'
               distribution: 'temurin'
