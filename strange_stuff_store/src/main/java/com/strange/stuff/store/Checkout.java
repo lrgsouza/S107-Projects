@@ -16,8 +16,8 @@ public class Checkout {
     }
     
     // Calculate total in cart
-    public double calculateTotal() {
-        double total = 0.0;
+    public float calculateTotal() {
+        float total = 0.0f;
         for (Map.Entry<Product, Integer> entry : cart.entrySet()) {
             Product product = entry.getKey();
             int quantity = entry.getValue();
@@ -39,7 +39,7 @@ public class Checkout {
         }
         
         // Update stock
-        double total = 0.0;
+        float total = 0.0f;
         for (Map.Entry<Product, Integer> entry : cart.entrySet()) {
             Product product = entry.getKey();
             int quantityInCart = entry.getValue();
@@ -67,5 +67,8 @@ public class Checkout {
                 System.out.println("- " + product.getName() + " ($" + product.getPrice() + ") x " + quantity);
             }
         }
+    }
+    public int getCartSize() {
+        return cart.size();
     }
 }
