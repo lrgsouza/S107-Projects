@@ -17,7 +17,13 @@ public class Checkout {
 
     // Remove product from cart
     public void removeFromCart(Product product) {
-        cart.remove(product);
+        if (cart.containsKey(product)) {
+            cart.remove(product);
+        }
+        else{
+            // throw exception
+            throw new IllegalArgumentException("Product not found in cart");
+        }
     }
     
     // Calculate total in cart
