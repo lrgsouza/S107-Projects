@@ -69,4 +69,8 @@ public class strageStuffStoreTest {
         assertEquals(0, checkout.getCartSize());
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void testRemoveUnlistedItem() {
+        checkout.removeFromCart(raccoon2);
+    }
 }
