@@ -87,4 +87,9 @@ public class strangeStuffStoreTest {
         checkout.addToCart(raccoon1, 2);
         assertEquals(209.93f, checkout.calculateTotal(), 0.0001);
     }
+
+    @Test(expected = IllegalStateException.class)
+    public void testCompleteEmptyCart() {
+        checkout.completePurchase();
+    } 
 }
