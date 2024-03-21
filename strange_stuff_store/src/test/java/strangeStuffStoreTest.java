@@ -80,4 +80,11 @@ public class strangeStuffStoreTest {
         checkout.addToCart(raccoon1, 7);
         assertEquals(8, checkout.getCartSize());
     }
+
+    @Test
+    public void testCartPriceAfterAddSameProduct() {
+        checkout.addToCart(raccoon1, 5);
+        checkout.addToCart(raccoon1, 2);
+        assertEquals(209.93f, checkout.calculateTotal(), 0.0001);
+    }
 }
