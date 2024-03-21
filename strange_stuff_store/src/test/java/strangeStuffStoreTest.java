@@ -91,5 +91,12 @@ public class strangeStuffStoreTest {
     @Test(expected = IllegalStateException.class)
     public void testCompleteEmptyCart() {
         checkout.completePurchase();
-    } 
+    }
+
+    @Test
+    public void testAddToCartNegativeQuantity() {
+        checkout.addToCart(artifact1, 1);
+        checkout.addToCart(artifact1, -1);
+        assertEquals(0, checkout.getCartSize());
+    }
 }
