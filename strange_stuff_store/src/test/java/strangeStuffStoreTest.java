@@ -73,4 +73,11 @@ public class strangeStuffStoreTest {
     public void testRemoveUnlistedItem() {
         checkout.removeFromCart(raccoon2);
     }
+
+    @Test
+    public void testAddToCartSameProduct() {
+        checkout.addToCart(raccoon1, 1);
+        checkout.addToCart(raccoon1, 7);
+        assertEquals(8, checkout.getCartSize());
+    }
 }
