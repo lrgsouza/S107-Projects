@@ -12,7 +12,12 @@ public class Checkout {
     
     // Add product to cart
     public void addToCart(Product product, int quantity) {
-        cart.put(product, quantity);
+        if (cart.containsKey(product)) {
+            cart.put(product, cart.get(product) + quantity);
+        }
+        else {
+            cart.put(product, quantity);
+        }
     }
 
     // Remove product from cart
