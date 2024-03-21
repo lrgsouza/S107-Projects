@@ -44,26 +44,31 @@ public class Checkout {
     
     // Finish shopping
     public void completePurchase() {
-        // Check if there is enough stock for each item in the cart
-        for (Map.Entry<Product, Integer> entry : cart.entrySet()) {
-            Product product = entry.getKey();
-            int quantityInCart = entry.getValue();
-            if (product.getQuantity() < quantityInCart) {
-                System.out.println("Sorry, the item " + product.getName() + " is sold out.");
-                return;
+        if (cart.isEmpty()) {
+            throw new IllegalStateException("Cart is empty");
+        }
+        else {
+            // Check if there is enough stock for each item in the cart
+            for (Map.Entry<Product, Integer> entry : cart.entrySet()) {
+                Product product = entry.getKey();
+                int quantityInCart = entry.getValue();
+                if (product.getQuantity() < quantityInCart) {
+                    System.out.println("Sorry, the item " + product.getName() + " is sold out.");
+                    return;
+                }
             }
+            
+            // Update stock
+            float total = 0.0f;
+            for (Map.Entry<Product, Integer> entry : cart.entrySet()) {
+                Product product = entry.getKey();
+                int quantityInCart = entry.getValue();
+                total += product.getPrice() * quantityInCart;
+                product.setQuantity(product.getQuantity() - quantityInCart); // Reduce stock
+            }
+            
+            System.out.println("Purchase finished. The total is: $" + total);
         }
-        
-        // Update stock
-        float total = 0.0f;
-        for (Map.Entry<Product, Integer> entry : cart.entrySet()) {
-            Product product = entry.getKey();
-            int quantityInCart = entry.getValue();
-            total += product.getPrice() * quantityInCart;
-            product.setQuantity(product.getQuantity() - quantityInCart); // Reduce stock
-        }
-        
-        System.out.println("Purchase finished. The total is: $" + total);
     }
     
     // Clean the cart up
