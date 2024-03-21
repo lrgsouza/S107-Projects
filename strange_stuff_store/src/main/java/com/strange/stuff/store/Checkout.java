@@ -12,12 +12,23 @@ public class Checkout {
     
     // Add product to cart
     public void addToCart(Product product, int quantity) {
-        cart.put(product, quantity);
+        if (cart.containsKey(product)) {
+            cart.put(product, cart.get(product) + quantity);
+        }
+        else {
+            cart.put(product, quantity);
+        }
     }
 
     // Remove product from cart
     public void removeFromCart(Product product) {
-        cart.remove(product);
+        if (cart.containsKey(product)) {
+            cart.remove(product);
+        }
+        else{
+            // throw exception
+            throw new IllegalArgumentException("Product not found in cart");
+        }
     }
     
     // Calculate total in cart
@@ -33,26 +44,31 @@ public class Checkout {
     
     // Finish shopping
     public void completePurchase() {
-        // Check if there is enough stock for each item in the cart
-        for (Map.Entry<Product, Integer> entry : cart.entrySet()) {
-            Product product = entry.getKey();
-            int quantityInCart = entry.getValue();
-            if (product.getQuantity() < quantityInCart) {
-                System.out.println("Sorry, the item " + product.getName() + " is sold out.");
-                return;
+        if (cart.isEmpty()) {
+            throw new IllegalStateException("Cart is empty");
+        }
+        else {
+            // Check if there is enough stock for each item in the cart
+            for (Map.Entry<Product, Integer> entry : cart.entrySet()) {
+                Product product = entry.getKey();
+                int quantityInCart = entry.getValue();
+                if (product.getQuantity() < quantityInCart) {
+                    System.out.println("Sorry, the item " + product.getName() + " is sold out.");
+                    return;
+                }
             }
+            
+            // Update stock
+            float total = 0.0f;
+            for (Map.Entry<Product, Integer> entry : cart.entrySet()) {
+                Product product = entry.getKey();
+                int quantityInCart = entry.getValue();
+                total += product.getPrice() * quantityInCart;
+                product.setQuantity(product.getQuantity() - quantityInCart); // Reduce stock
+            }
+            
+            System.out.println("Purchase finished. The total is: $" + total);
         }
-        
-        // Update stock
-        float total = 0.0f;
-        for (Map.Entry<Product, Integer> entry : cart.entrySet()) {
-            Product product = entry.getKey();
-            int quantityInCart = entry.getValue();
-            total += product.getPrice() * quantityInCart;
-            product.setQuantity(product.getQuantity() - quantityInCart); // Reduce stock
-        }
-        
-        System.out.println("Purchase finished. The total is: $" + total);
     }
     
     // Clean the cart up

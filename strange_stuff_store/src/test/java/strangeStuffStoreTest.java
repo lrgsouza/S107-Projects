@@ -7,7 +7,7 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-public class strageStuffStoreTest {
+public class strangeStuffStoreTest {
 
     Checkout checkout;
     UrbanRaccoon raccoon1;
@@ -69,4 +69,34 @@ public class strageStuffStoreTest {
         assertEquals(0, checkout.getCartSize());
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void testRemoveUnlistedItem() {
+        checkout.removeFromCart(raccoon2);
+    }
+
+    @Test
+    public void testAddToCartSameProduct() {
+        checkout.addToCart(raccoon1, 1);
+        checkout.addToCart(raccoon1, 7);
+        assertEquals(8, checkout.getCartSize());
+    }
+
+    @Test
+    public void testCartPriceAfterAddSameProduct() {
+        checkout.addToCart(raccoon1, 5);
+        checkout.addToCart(raccoon1, 2);
+        assertEquals(209.93f, checkout.calculateTotal(), 0.0001);
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void testCompleteEmptyCart() {
+        checkout.completePurchase();
+    }
+
+    @Test
+    public void testAddToCartNegativeQuantity() {
+        checkout.addToCart(artifact1, 1);
+        checkout.addToCart(artifact1, -1);
+        assertEquals(0, checkout.getCartSize());
+    }
 }
