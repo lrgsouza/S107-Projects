@@ -50,7 +50,7 @@ jobs:
           MAIL_SUBJECT: Strange Stuff Store Building...
           MAIL_BODY: Your Build of Strange Stuff Store is running.
         steps:
-          - uses: actions/checkout@v3
+          - uses: actions/checkout@v4
           - name: Notification 
             run: sh scripts/sendmail.sh
               
