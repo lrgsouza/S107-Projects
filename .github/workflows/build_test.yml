@@ -20,12 +20,12 @@ jobs:
         - name: Test with Maven
           run: |
             cd strange_stuff_store
-            mvn test
+            mvn clean test site
         - name: Upload test results as artifact
           uses: actions/upload-artifact@v4
           with:
-            name: test-results
-            path: strange_stuff_store/target/surefire-reports/
+            name: test-results-site
+            path: strange_stuff_store/target/site
             
     build:
         runs-on: ubuntu-latest
@@ -42,6 +42,11 @@ jobs:
           run: |
             cd strange_stuff_store
             mvn clean install
+        - name: Upload test results as artifact
+          uses: actions/upload-artifact@v4
+          with:
+            name: strange_stuff_store-1.0-SNAPSHOT.jar
+            path: strange_stuff_store/target/strange_stuff_store-1.0-SNAPSHOT.jar
 
     notification:
         runs-on: ubuntu-latest
